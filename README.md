@@ -4,7 +4,7 @@
 **NIM:** 4124033  
 
 ## Screenshot Halaman Welcome
-![Halaman Welcome](./welcome.jpg)
+![Halaman Welcome](./Welcome.jpg)
 
 ## Link Navigasi
 Klik tautan di bawah ini untuk melihat profil saya:  
