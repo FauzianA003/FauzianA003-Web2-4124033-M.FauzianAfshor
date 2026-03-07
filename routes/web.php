@@ -14,3 +14,4 @@ Route::get('/perkenalan', function () {
             <p>Saya siap belajar Laravel! 🚀</p>';
 
 });
+Route::get('/fauzan-hakiki', function () { return 'Halo Fauzan!'; });
