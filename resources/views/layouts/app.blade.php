@@ -1,29 +1,36 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title')</title>
-    @vite('resources/css/app.css')
-</head>
-<body class="bg-slate-50 flex flex-col min-h-screen">
-    <nav class="bg-blue-700 text-white p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="/" class="font-black text-xl tracking-tighter">MY-STORE</a>
-            <div class="space-x-6 text-sm font-bold uppercase">
-                <a href="{{ route('katalog.index') }}" class="hover:text-yellow-400">Katalog</a>
-                <a href="{{ route('profil.index') }}" class="hover:text-yellow-400">Profil</a>
-                <a href="{{ route('statis.about') }}" class="hover:text-yellow-400">Tentang</a>
-            </div>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <title>{{ config('app.name', 'Laravel') }}</title>
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-gray-100">
+            @include('layouts.navigation')
+
+            <!-- Page Heading -->
+            @isset($header)
+                <header class="bg-white shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endisset
+
+            <!-- Page Content -->
+            <main>
+                {{ $slot }}
+            </main>
         </div>
-    </nav>
-
-    <main class="container mx-auto flex-grow p-8">
-        @yield('content')
-    </main>
-
-    <footer class="bg-blue-800 text-white p-6 text-center text-xs font-bold uppercase tracking-widest">
-        &copy; 2026 M. Fauzian Afshor | 4124033
-    </footer>
-</body>
+    </body>
 </html>

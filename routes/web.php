@@ -1,31 +1,44 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\PengembalianController;
+use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfilController;
-use App\Http\Controllers\KatalogController;
 
-// 1. Route Utama - Redirect ke Katalog agar langsung muncul Grid Produk (Poin 5 & 10)
 Route::get('/', function () {
-    return redirect()->route('katalog.index');
+    return view('welcome');
 });
 
-// 2. Route Katalog & Produk (Poin 5 & 6)
-Route::get('/katalog', [KatalogController::class, 'index'])->name('katalog.index');
-Route::get('/katalog/create', function () {
-    return view('katalog.create');
-})->name('produk.create');
-Route::get('/katalog/{id}', [KatalogController::class, 'show'])->name('katalog.show');
+// Dashboard dengan statistik
+Route::get('/dashboard', function () {
+    $totalBarang = \App\Models\Barang::count();
+    $totalAnggota = \App\Models\Anggota::count();
+    // Gunakan nama variabel $totalPinjam agar sesuai dengan file blade
+    $totalPinjam = \App\Models\Peminjaman::where('status', 'Dipinjam')->count();
 
-// 3. Route Profil (Card)
-Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index');
-Route::get('/profil/{nim}', [ProfilController::class, 'show'])->name('profil.show');
+    return view('dashboard', compact('totalBarang', 'totalAnggota', 'totalPinjam'));
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// 4. Route Statis dengan View Blade (Poin 7)
-Route::get('/about', function () {
-    return view('katalog.about');
-})->name('statis.about');
+Route::middleware('auth')->group(function () {
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-// Route tambahan jika diperlukan
-Route::get('/kontak', function () {
-    return "<h1>Halaman Kontak</h1>";
-})->name('statis.kontak');
+    // Master Data
+    Route::resource('barang', BarangController::class);
+    Route::resource('anggota', AnggotaController::class);
+
+    // Transaksi Peminjaman & Pengembalian
+    Route::resource('peminjaman', PeminjamanController::class);
+    Route::post('/peminjaman/{id}/kembali', [PeminjamanController::class, 'kembali'])->name('peminjaman.kembali');
+
+    // Riwayat & Laporan
+    Route::resource('pengembalian', PengembalianController::class);
+    Route::resource('laporan', LaporanController::class);
+});
+
+require __DIR__.'/auth.php';
