@@ -15,23 +15,24 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('barang.index')" :active="request()->routeIs('barang.index')">
-                        {{ __('Barang') }}
+
+                    <!-- MENU BARU -->
+                    <x-nav-link :href="route('houses.index')" :active="request()->routeIs('houses.index')">
+                        {{ __('Beranda') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('anggota.index')" :active="request()->routeIs('anggota.index')">
-                        {{ __('Anggota') }}
+
+                    <x-nav-link :href="route('bookings.my')" :active="request()->routeIs('bookings.my')">
+                        {{ __('Sewa Saya') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('peminjaman.index')" :active="request()->routeIs('peminjaman.index')">
-                        {{ __('Peminjaman') }}
+
+                    <x-nav-link :href="route('admin.houses.create')" :active="request()->routeIs('admin.houses.create')">
+                        {{ __('+ Tambah Rumah') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('pengembalian.index')" :active="request()->routeIs('pengembalian.index')">
-                        {{ __('Pengembalian') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('laporan.index')" :active="request()->routeIs('laporan.index')">
-                        {{ __('Laporan') }}
+
+                    <x-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.index')">
+                        {{ __('Daftar Pesanan') }}
                     </x-nav-link>
                 </div>
-            </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -80,12 +81,35 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
+
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+
         <div class="pt-2 pb-3 space-y-1">
+
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+
                 {{ __('Dashboard') }}
+
             </x-responsive-nav-link>
-        </div>
+
+
+            <!-- MENU BARU MOBILE -->
+            <x-responsive-nav-link :href="route('houses.index')" :active="request()->routeIs('houses.index')">
+            {{ __('Beranda') }}
+        </x-responsive-nav-link>
+
+        <x-responsive-nav-link :href="route('bookings.my')" :active="request()->routeIs('bookings.my')">
+            {{ __('Sewa Saya') }}
+        </x-responsive-nav-link>
+
+        <x-responsive-nav-link :href="route('admin.houses.create')" :active="request()->routeIs('admin.houses.create')">
+            {{ __('+ Tambah Rumah') }}
+        </x-responsive-nav-link>
+
+        <x-responsive-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.index')">
+            {{ __('Daftar Pesanan') }}
+        </x-responsive-nav-link>
+    </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
